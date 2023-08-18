@@ -33,6 +33,7 @@ long prevT = 0;
 
 
 Encoder enc(encA, encB);
+long startPos;
 
 void setup() {
   pinMode(motor_pin, OUTPUT);
@@ -41,12 +42,13 @@ void setup() {
 
   pinMode(limit_left, INPUT_PULLUP);
   pinMode(limit_right, INPUT_PULLUP);
+  startPos = AnalogRead(pot_pin);
   //Serial.begin(9600);
 
 }
 
 void loop() {
-  m = long((double(-enc.read())/2.0)+519.0); //Calculate setpoint value
+  m = long((double(-enc.read())/2.0)+double(startPos)); //Calculate setpoint value
   if (m < 100) m = 100;
   if (m > 900) m = 900;
   setMotorPos(m);
